@@ -1,0 +1,79 @@
+<launch>
+
+  <!-- First, launch robot description from whoever we like -->
+  <param name="/use_sim_time" value="true"/>
+	<arg name="kinova_robotType" default="j2s6s300" />
+  <arg name="kinova_robotName" default="$(arg kinova_robotType)"/>
+  <arg name="debug" default="false"/>
+  <arg name="use_trajectory_controller" default="true"/>
+  <arg name="is7dof" default="false"/>
+
+  <!--  mujoco args -->
+  <arg name="robot_model_path" default="/home/abba/msu_ws/src/msu_ros/src/kinova_j2s6s300/mj-j2s6s300.xml"/>
+  <arg name="key_path" default="/home/abba/.mujoco/mjkey.txt"/>
+  <arg name="robot_description_param" default="robot_description"/>
+
+  <!-- old robot_description param: -->
+  <param name="robot_description" command="cat /home/abba/msu_ws/src/msu_ros/src/kinova_j2s6s300/ros-j2s6s300.xml" />
+
+  <!-- TODO: how can we make this accurate? -->
+  <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+		<param name="zeros/$(arg kinova_robotType)_joint_2" value="3.1415"/>
+		<param name="zeros/$(arg kinova_robotType)_joint_3" value="3.1415"/>
+	  <param name="zeros/$(arg kinova_robotType)_joint_4" value="3.1415"/>
+	</node> -->
+
+  <!-- TODO: from basic kinova upload.
+             subscribes to joint_states. publishes tf
+             how can we publish joint states from the hardware interface??
+             how does kinova_gazebo do this?
+  -->
+	<!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" /> -->
+
+
+  <!-- launch mujoco_ros -->
+  <!-- TODO: should I be using the urdf?
+             should the actuators be defined in mj xml as they are in mj-j2s6s300.xml? -->
+  <node name="mujoco_ros_control" pkg="mujoco_ros_control" type="mujoco_ros_control" output="screen" ns="$(arg kinova_robotType)">
+    <param name="robot_model_path" value="$(arg robot_model_path)"/>
+    <param name="robot_description_param" value="$(arg robot_description_param)"/>
+    <param name="key_path" value="$(arg key_path)"/>
+  </node>
+
+  <!-- launch kinova controllers -->
+  <include file="$(find kinova_control)/launch/kinova_control.launch">
+    <arg name="kinova_robotName" value="$(arg kinova_robotName)"/>
+    <arg name="kinova_robotType" value="$(arg kinova_robotType)"/>
+    <arg name="use_trajectory_controller" value="$(arg use_trajectory_controller)"/>
+    <arg name="is7dof" value="$(arg is7dof)"/>
+  </include>
+
+  <!-- launch moveit. copied directly from j2s6s300_gazebo_demo -->
+  <param name="robot_type" value="j2s6s300" />
+  <param name="robot_connected" value="false" />
+
+  <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+  <include file="$(find j2s6s300_moveit_config)/launch/planning_context.launch">
+    <arg name="load_robot_description" value="true"/>
+  </include>
+
+  <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
+  <include file="$(find j2s6s300_moveit_config)/launch/move_group_j2s6s300.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+    <arg name="fake_execution" value="false"/>
+    <arg name="info" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="joint_states_ns" value="/j2s6s300/joint_states"/>
+    <arg name="controller_manager" value="j2s6s300_ros_control"/>
+  </include>
+
+  <!-- ros-control Controller parameters-->
+  <rosparam file="$(find j2s6s300_moveit_config)/config/controllers_ros_control.yaml"/>
+
+  <!-- Run Rviz and load the default config to see the state of the move_group node -->
+  <!-- <include file="$(find j2s6s300_moveit_config)/launch/moveit_rviz.launch">
+    <arg name="config" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include> -->
+
+</launch>
