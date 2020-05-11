@@ -20,7 +20,6 @@ int main( int argc, char** argv )
     }
 
     printf("%s\n", "Successfully parsed urdf file");
-    // printf("%s\n", "FUCK");
 
     //get chain
     KDL::Chain chain;
@@ -33,14 +32,6 @@ int main( int argc, char** argv )
     } else {
       printf("%s\n", "getChain successful. ");
     }
-
-    // KDL::Chain chain;
-    // chain.addSegment(Segment(Joint(Joint::RotZ),Frame(Vector(0.0,0.0,1.020))));
-    // chain.addSegment(Segment(Joint(Joint::RotX),Frame(Vector(0.0,0.0,0.480))));
-    // chain.addSegment(Segment(Joint(Joint::RotX),Frame(Vector(0.0,0.0,0.645))));
-    // chain.addSegment(Segment(Joint(Joint::RotZ)));
-    // chain.addSegment(Segment(Joint(Joint::RotX),Frame(Vector(0.0,0.0,0.120))));
-    // chain.addSegment(Segment(Joint(Joint::RotZ)));
 
     // Create solver based on kinematic chain
     ChainFkSolverPos_recursive fksolver = ChainFkSolverPos_recursive(chain);
@@ -65,7 +56,7 @@ int main( int argc, char** argv )
     kinematics_status = fksolver.JntToCart(jointpositions,cartpos);
     if(kinematics_status>=0){
         std::cout << cartpos <<std::endl;
-        printf("%s \n","Succes, thanks KDL!");
+        printf("%s \n","Success, thanks KDL!");
     }else{
         printf("%s \n","Error: could not calculate forward kinematics :(");
     }
