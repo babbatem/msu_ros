@@ -23,25 +23,24 @@ catkin build
 ```
 
 ## msu_ros
-download my fork of mujoco_ros_pkgs  
-(modified CMakeLists.txt and source code to use env variables above, adding depth image publishing)  
+1. download my fork of mujoco_ros_pkgs  
 ```
 cd ~/msu_ws/src
 git clone https://github.com/babbatem/mujoco_ros_pkgs.git
 ```  
 
-download kinova_ros (our test platform, for now)   
+2. download kinova_ros (our test platform, for now)   
 ```
 cd ~/msu_ws/src
 git clone https://github.com/Kinovarobotics/kinova-ros.git
 ```
 
-download msu_ros  
+3. download msu_ros  
 ```
 git clone https://github.com/babbatem/msu_ros.git
 ```
 
-compile  
+4. compile  
 ```
 cd ~/msu_ws/
 catkin build
@@ -49,12 +48,9 @@ catkin build
 
 if you run into issues here, let me know and we can work through them.
 
-test (load mujoco HWSim and control it using kinova & moveit packages)  
+5. test (load mujoco HWSim and control it using kinova & moveit packages)  
 ```
 source devel/setup.bash
 roslaunch msu_ros moveit_integration.launch &
 python msu_ros/src/scripts/msu_ros_test.py
 ```
-
-## TODOs
-turn this structure into submodules
