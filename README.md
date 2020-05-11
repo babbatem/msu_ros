@@ -39,6 +39,8 @@ git clone https://github.com/Kinovarobotics/kinova-ros.git
 ```
 git clone https://github.com/babbatem/msu_ros.git
 ```
+please change the hard-coded filepaths in ```launch/moveit_integration.launch```
+
 
 4. compile  
 ```
