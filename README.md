@@ -4,9 +4,9 @@ Implements ```Motors Skill Units``` or whatever we're calling it these days.
 
 # Installation:
 ## mujoco
-download & extract mujoco150 in ~/.mujoco
-download mjkey.txt from slack/email/Ben and place it in ~/.mujoco
-set env variables (preferably in .bashrc so they are loaded on shell creation)
+1. download & extract mujoco150 in ~/.mujoco
+2. download mjkey.txt from slack/email/Ben and place it in ~/.mujoco
+3. set env variables (preferably in .bashrc so they are loaded on shell creation)
 ```
 export MUJOCO_VERSION="mjpro151"
 export MUJOCO_PRO_PATH="$HOME/.mujoco/${MUJOCO_VERSION}/"
