@@ -9,31 +9,14 @@
   <arg name="is7dof" default="false"/>
 
   <!--  mujoco args -->
-  <arg name="robot_model_path" default="/home/abba/msu_ws/src/msu_ros/src/kinova_j2s6s300/mj-j2s6s300.xml"/>
+  <arg name="robot_model_path" default="/home/abba/msu_ws/src/msu_ros/assets/kinova_j2s6s300/mj-j2s6s300.xml"/>
   <arg name="key_path" default="/home/abba/.mujoco/mjkey.txt"/>
   <arg name="robot_description_param" default="robot_description"/>
 
   <!-- old robot_description param: -->
-  <param name="robot_description" command="cat /home/abba/msu_ws/src/msu_ros/src/kinova_j2s6s300/ros-j2s6s300.xml" />
-
-  <!-- TODO: how can we make this accurate? -->
-  <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-		<param name="zeros/$(arg kinova_robotType)_joint_2" value="3.1415"/>
-		<param name="zeros/$(arg kinova_robotType)_joint_3" value="3.1415"/>
-	  <param name="zeros/$(arg kinova_robotType)_joint_4" value="3.1415"/>
-	</node> -->
-
-  <!-- TODO: from basic kinova upload.
-             subscribes to joint_states. publishes tf
-             how can we publish joint states from the hardware interface??
-             how does kinova_gazebo do this?
-  -->
-	<!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" /> -->
-
+  <param name="robot_description" command="cat /home/abba/msu_ws/src/msu_ros/assets/kinova_j2s6s300/ros-j2s6s300.xml" />
 
   <!-- launch mujoco_ros -->
-  <!-- TODO: should I be using the urdf?
-             should the actuators be defined in mj xml as they are in mj-j2s6s300.xml? -->
   <node name="mujoco_ros_control" pkg="mujoco_ros_control" type="mujoco_ros_control" output="screen" ns="$(arg kinova_robotType)">
     <param name="robot_model_path" value="$(arg robot_model_path)"/>
     <param name="robot_description_param" value="$(arg robot_description_param)"/>

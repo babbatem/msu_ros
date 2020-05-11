@@ -1,0 +1,27 @@
+<!-- Launch in the camera namespace containing "image_raw" and "camera_info" -->
+<launch>
+
+  <!-- Nodelet manager for this pipeline -->
+   <node pkg="nodelet" type="nodelet" args="manager"
+         name="cam_manager" output="screen"/>
+
+  <!-- pointcloud. -->
+  <node pkg="nodelet" type="nodelet" name="cloudy"
+        args="load depth_image_proc/point_cloud_xyz cam_manager --no-bond">
+    <remap from="camera_info" to="cam_1_info" />
+    <remap from="image_rect" to="depth" />
+  </node>
+  
+  <!-- <node pkg="tf" type="static_transform_publisher" name="tf_pub_base_cam_frame"
+       args= "$(eval
+           env('base_cam_x_pos') + ' ' +
+           env('base_cam_y_pos') + ' ' +
+           env('base_cam_z_pos') + ' ' +
+           env('base_cam_x_rot') + ' ' +
+           env('base_cam_y_rot') + ' ' +
+           env('base_cam_z_rot') + ' ' +
+           env('base_cam_w_rot') + ' ' +
+           '/world /base_cam_link 100'
+       )"/> -->
+
+</launch>
