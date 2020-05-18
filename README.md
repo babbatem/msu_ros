@@ -1,6 +1,6 @@
 # msu_ros
 
-Implements ```Motors Skill Units``` or whatever we're calling it these days.
+Implements ```Motors Skill Units``` aka ```Composable Interaction Primitives```
 
 # Installation:
 ## mujoco
@@ -56,3 +56,6 @@ source devel/setup.bash
 roslaunch msu_ros moveit_integration.launch &
 python msu_ros/src/scripts/msu_ros_test.py
 ```
+
+For a brief python kdl example, see src/scripts/kdl_test.py.
+Note that the robot has changed a bit, and the model is in msu_ros/assets/kinova...
