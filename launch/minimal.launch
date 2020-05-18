@@ -1,0 +1,18 @@
+<launch>
+
+  <arg name="kinova_robotType" default="j2s6s300" />
+  <arg name="robot_model_path" default="/home/abba/msu_ws/src/msu_ros/assets/kinova_j2s6s300/mj-j2s6s300_door.xml"/>
+  <arg name="key_path" default="/home/abba/.mujoco/mjkey.txt"/>
+  <arg name="robot_description_param" default="robot_description"/>
+
+  <!-- upload the actual urdf (note: we could xacro here, in the future) -->
+  <param name="robot_description" command="cat /home/abba/msu_ws/src/msu_ros/assets/kinova_j2s6s300/ros-j2s6s300.xml" />
+
+  <!-- launch mujoco_ros -->
+  <!-- note this loads the robot at robot_model_path, together with whatever objects are there :) -->
+  <node name="mujoco_ros_control" pkg="mujoco_ros_control" type="mujoco_ros_control" output="screen" ns="$(arg kinova_robotType)">
+    <param name="robot_model_path" value="$(arg robot_model_path)"/>
+    <param name="robot_description_param" value="$(arg robot_description_param)"/>
+    <param name="key_path" value="$(arg key_path)"/>
+  </node>
+</launch>

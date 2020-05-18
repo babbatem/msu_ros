@@ -9,7 +9,7 @@
   <arg name="is7dof" default="false"/>
 
   <!--  mujoco args -->
-  <arg name="robot_model_path" default="/home/abba/msu_ws/src/msu_ros/assets/kinova_j2s6s300/mj-j2s6s300.xml"/>
+  <arg name="robot_model_path" default="/home/abba/msu_ws/src/msu_ros/assets/kinova_j2s6s300/mj-j2s6s300_door.xml"/>
   <arg name="key_path" default="/home/abba/.mujoco/mjkey.txt"/>
   <arg name="robot_description_param" default="robot_description"/>
 
