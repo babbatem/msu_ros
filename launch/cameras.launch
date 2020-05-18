@@ -8,25 +8,25 @@
   <!-- pointcloud. -->
   <node pkg="nodelet" type="nodelet" name="cloudy0"
         args="load depth_image_proc/point_cloud_xyz cam_manager --no-bond">
-    <remap from="camera_info" to="cam_0_info" />
-    <remap from="image_rect" to="depth0" />
-    <remap from="points" to="points0"/>
+    <remap from="camera_info" to="cam_0/info" />
+    <remap from="image_rect" to="cam_0/depth" />
+    <remap from="points" to="cam_0/points"/>
   </node>
 
   <!-- pointcloud. -->
   <node pkg="nodelet" type="nodelet" name="cloudy1"
         args="load depth_image_proc/point_cloud_xyz cam_manager --no-bond">
-    <remap from="camera_info" to="cam_1_info" />
-    <remap from="image_rect" to="depth1" />
-    <remap from="points" to="points1"/>
+    <remap from="camera_info" to="cam_1/info" />
+    <remap from="image_rect" to="cam_1/depth" />
+    <remap from="points" to="cam_1/points"/>
   </node>
 
   <!-- pointcloud. -->
   <node pkg="nodelet" type="nodelet" name="cloudy2"
         args="load depth_image_proc/point_cloud_xyz cam_manager --no-bond">
-    <remap from="camera_info" to="cam_2_info" />
-    <remap from="image_rect" to="depth2" />
-    <remap from="points" to="points2"/>
+    <remap from="camera_info" to="cam_2/info" />
+    <remap from="image_rect" to="cam_2/depth" />
+    <remap from="points" to="cam_2/points"/>
   </node>
 
 
