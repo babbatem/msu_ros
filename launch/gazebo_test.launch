@@ -1,0 +1,25 @@
+<launch>
+
+  <include file="$(find kinova_gazebo)/launch/robot_launch.launch">
+    <arg name="kinova_robotType" value="j2s6s300"/>
+  </include>
+
+
+  <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
+  <include file="$(find j2s6s300_moveit_config)/launch/move_group_j2s6s300.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+    <arg name="fake_execution" value="false"/>
+    <arg name="info" value="true"/>
+    <arg name="joint_states_ns" value="/j2s6s300/joint_states"/>
+    <arg name="controller_manager" value="j2s6s300_ros_control"/>
+  </include>
+
+  <!-- ros-control Controller parameters-->
+  <rosparam file="$(find j2s6s300_moveit_config)/config/controllers_ros_control.yaml"/>
+
+  <!-- Run Rviz and load the default config to see the state of the move_group node -->
+  <include file="$(find j2s6s300_moveit_config)/launch/moveit_rviz.launch">
+    <arg name="config" value="true"/>
+  </include>
+
+</launch>

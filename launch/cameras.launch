@@ -1,4 +1,4 @@
-<!-- Launch in the camera namespace containing "image_raw" and "camera_info" -->
+<!-- Launch in the camera namespace containing "image_raw" and "camera_camera_info" -->
 <launch>
 
   <!-- Nodelet manager for this pipeline -->
@@ -8,7 +8,7 @@
   <!-- pointcloud. -->
   <node pkg="nodelet" type="nodelet" name="cloudy0"
         args="load depth_image_proc/point_cloud_xyz cam_manager --no-bond">
-    <remap from="camera_info" to="cam_0/info" />
+    <remap from="camera_info" to="cam_0/camera_info" />
     <remap from="image_rect" to="cam_0/depth" />
     <remap from="points" to="cam_0/points"/>
   </node>
@@ -16,7 +16,7 @@
   <!-- pointcloud. -->
   <node pkg="nodelet" type="nodelet" name="cloudy1"
         args="load depth_image_proc/point_cloud_xyz cam_manager --no-bond">
-    <remap from="camera_info" to="cam_1/info" />
+    <remap from="camera_info" to="cam_1/camera_info" />
     <remap from="image_rect" to="cam_1/depth" />
     <remap from="points" to="cam_1/points"/>
   </node>
@@ -24,7 +24,7 @@
   <!-- pointcloud. -->
   <node pkg="nodelet" type="nodelet" name="cloudy2"
         args="load depth_image_proc/point_cloud_xyz cam_manager --no-bond">
-    <remap from="camera_info" to="cam_2/info" />
+    <remap from="camera_info" to="cam_2/camera_info" />
     <remap from="image_rect" to="cam_2/depth" />
     <remap from="points" to="cam_2/points"/>
   </node>

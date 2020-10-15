@@ -1,0 +1,52 @@
+<launch>
+
+  <!-- LAUNCH MUJOCO_ROS_CONTROL -->
+  <arg name="kinova_robotType" default="j2s6s300" />
+  <arg name="robot_model_path" default="/home/abba/msu_ws/src/msu_ros/assets/kinova_j2s6s300/mj-j2s6s300_door.xml"/>
+  <arg name="key_path" default="/home/abba/.mujoco/mjkey.txt"/>
+  <arg name="robot_description_param" default="robot_description"/>
+
+  <!-- upload the actual urdf (note: we could xacro here, in the future) -->
+  <param name="robot_description" command="cat /home/abba/msu_ws/src/msu_ros/assets/kinova_j2s6s300/ros-j2s6s300.xml" />
+
+  <!-- launch mujoco_ros -->
+  <!-- note this loads the robot at robot_model_path, together with whatever objects are there :) -->
+  <node name="mujoco_ros_control" pkg="mujoco_ros_control" type="mujoco_ros_control" ns="$(arg kinova_robotType)">
+    <param name="robot_model_path" value="$(arg robot_model_path)"/>
+    <param name="robot_description_param" value="$(arg robot_description_param)"/>
+    <param name="key_path" value="$(arg key_path)"/>
+  </node>
+
+  <!-- LAUNCH DEPTH_IMAGE_PROC NODES  -->
+  <node pkg="nodelet" type="nodelet" args="manager"
+         name="cam_manager" output="screen"/>
+
+  <node pkg="nodelet" type="nodelet" name="cloudy0"
+        args="load depth_image_proc/point_cloud_xyz cam_manager --no-bond">
+    <remap from="camera_info" to="cam_0/camera_info" />
+    <remap from="image_rect" to="cam_0/depth" />
+    <remap from="points" to="cam_0/points"/>
+  </node>
+
+  <node pkg="nodelet" type="nodelet" name="cloudy1"
+        args="load depth_image_proc/point_cloud_xyz cam_manager --no-bond">
+    <remap from="camera_info" to="cam_1/camera_info" />
+    <remap from="image_rect" to="cam_1/depth" />
+    <remap from="points" to="cam_1/points"/>
+  </node>
+
+  <node pkg="nodelet" type="nodelet" name="cloudy2"
+        args="load depth_image_proc/point_cloud_xyz cam_manager --no-bond">
+    <remap from="camera_info" to="cam_2/camera_info" />
+    <remap from="image_rect" to="cam_2/depth" />
+    <remap from="points" to="cam_2/points"/>
+  </node>
+
+  <!-- LAUNCH kuka_cam -->
+  <arg name="source_list" default="[/cam_0/points, /cam_1/points, /cam_2/points]"/>
+  <arg name="tf_list" default="[cam_0_optical, cam_1_optical, cam_2_optical]"/>
+  <node pkg="kuka_cam" type="merger_node" name="my_merger_node" output="screen"/>
+  <rosparam param="pointcloud_topic_names" subst_value="True">$(arg source_list)</rosparam>
+  <rosparam param="pointcloud_frame_names" subst_value="True">$(arg tf_list)</rosparam>
+
+</launch>

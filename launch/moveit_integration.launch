@@ -9,12 +9,13 @@
   <arg name="is7dof" default="false"/>
 
   <!--  mujoco args -->
-  <arg name="robot_model_path" default="/home/abba/msu_ws/src/msu_ros/assets/kinova_j2s6s300/mj-j2s6s300_door.xml"/>
+  <!-- <arg name="robot_model_path" default="/home/abba/msu_ws/src/msu_ros/assets/kinova_j2s6s300/mj-j2s6s300_door.xml"/> -->
+  <arg name="robot_model_path" default="/home/abba/msu_ws/src/msu_ros/assets/kinova_j2s6s300/mj-j2s6s300.xml"/>
   <arg name="key_path" default="/home/abba/.mujoco/mjkey.txt"/>
   <arg name="robot_description_param" default="robot_description"/>
 
   <!-- old robot_description param: -->
-  <param name="robot_description" command="cat /home/abba/msu_ws/src/msu_ros/assets/kinova_j2s6s300/ros-j2s6s300.xml" />
+  <param name="robot_description" command="cat /home/abba/msu_ws/src/msu_ros/assets/kinova_j2s6s300/ros-j2s6s300-actuator-reduction.xml" />
 
   <!-- launch mujoco_ros -->
   <node name="mujoco_ros_control" pkg="mujoco_ros_control" type="mujoco_ros_control" output="screen" ns="$(arg kinova_robotType)">
@@ -36,9 +37,9 @@
   <param name="robot_connected" value="false" />
 
   <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
-  <include file="$(find j2s6s300_moveit_config)/launch/planning_context.launch">
-    <arg name="load_robot_description" value="true"/>
-  </include>
+  <!-- <include file="$(find j2s6s300_moveit_config)/launch/planning_context.launch">
+    <arg name="load_robot_description" value="false"/>
+  </include> -->
 
   <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
   <include file="$(find j2s6s300_moveit_config)/launch/move_group_j2s6s300.launch">
@@ -54,9 +55,9 @@
   <rosparam file="$(find j2s6s300_moveit_config)/config/controllers_ros_control.yaml"/>
 
   <!-- Run Rviz and load the default config to see the state of the move_group node -->
-  <!-- <include file="$(find j2s6s300_moveit_config)/launch/moveit_rviz.launch">
+  <include file="$(find j2s6s300_moveit_config)/launch/moveit_rviz.launch">
     <arg name="config" value="true"/>
     <arg name="debug" value="$(arg debug)"/>
-  </include> -->
+  </include>
 
 </launch>

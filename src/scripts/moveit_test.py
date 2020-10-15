@@ -1,5 +1,6 @@
 import sys
 import copy
+import time
 import rospy
 import moveit_commander
 import moveit_msgs.msg
@@ -34,6 +35,8 @@ while True:
     # The go command can be called with joint values, poses, or without any
     # parameters if you have already set the pose or joint target for the group
     move_group.go(joint_goal, wait=True)
+
+    time.sleep(1.0)
 
     # Calling ``stop()``
     move_group.stop()
